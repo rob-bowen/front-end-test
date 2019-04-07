@@ -94,14 +94,11 @@ export default Vue.extend({
           this.$emit("user-logged-in");
         } catch (ex) {
           // Handle failed login
-
           this.validationErrors.submit = "Unable to login. Please try again!";
-
           // TODO: Distinguish between invalid credentials and server error
           showErrorToast("Unable to login!");
         }
       } else {
-        // TODO: Error toast
         showErrorToast(
           "Unable to login - Please complete all required fields!"
         );
