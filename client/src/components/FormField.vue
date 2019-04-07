@@ -4,8 +4,7 @@
       class="form-field__label"
       :class="{ error: hasValidationError }"
       :for="id"
-      >{{ labelText }}:</label
-    >
+    >{{ labelText }}:</label>
     <input
       class="form-field__input"
       :class="{ error: hasValidationError }"
@@ -13,7 +12,7 @@
       :type="type"
       :value="value"
       @input="handleInput"
-    />
+    >
     <p class="error" v-if="hasValidationError">{{ this.validationError }}</p>
     <p></p>
   </div>
@@ -51,7 +50,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleInput(e) {
+    handleInput(e: any) {
       this.$emit("input", e.target.value);
     }
   }

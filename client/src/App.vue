@@ -1,9 +1,18 @@
 <template>
   <div id="app">
-    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut" />
+    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut"/>
     <transition name="slide" mode="out-in">
-      <login v-if="notLoggedIn" @user-logged-in="handleLogIn" />
-      <portfolio v-else>Logged In!</portfolio>
+      <login v-if="notLoggedIn" @user-logged-in="handleLogIn"/>
+      <portfolio
+        v-else
+        :funds="funds"
+        :portfolio="portfolio"
+        :selectedAccountName="selectedAccountName"
+        :loadingData="loadingData"
+        :errorLoadingData="errorLoadingData"
+        :usersPortfolioName="usersPortfolioName"
+        @retry-load="loadData"
+      >Logged In!</portfolio>
     </transition>
   </div>
 </template>
@@ -11,7 +20,11 @@
 import Vue from "vue";
 import SiteHeader from "@/components/SiteHeader";
 import Login from "@/components/Login";
-import Portfolio from "@/components/Portfolio";
+import Portfolio from "@/components/portfolio/Portfolio";
+
+import { ApplicationState } from "@/types/state";
+import { getFundsWithHistory } from "@/services/fundsSvc";
+import { getPortfolioWithAccounts } from "@/services/portfolioSvc";
 
 export default Vue.extend({
   components: {
@@ -24,17 +37,55 @@ export default Vue.extend({
       return !this.isLoggedIn;
     }
   },
-  data() {
+  data(): ApplicationState {
     return {
-      isLoggedIn: false
+      usersPortfolioName: "",
+      selectedAccountName: "",
+      isLoggedIn: false,
+      funds: undefined,
+      portfolio: undefined,
+      loadingData: false,
+      errorLoadingData: false
     };
   },
   methods: {
     handleLogIn() {
+      // Obviously these two lines being hard coded are not 'real world'
+      this.usersPortfolioName = "ADA123456789";
+      this.selectedAccountName = "ADA123456789-ISA";
+
       this.isLoggedIn = true;
+      this.loadData();
+    },
+    async loadData() {
+      try {
+        // Set loading status flags
+        this.loadingData = true;
+        this.errorLoadingData = false;
+
+        // Actually fetch the data
+        const [funds, portfolio] = await Promise.all([
+          getFundsWithHistory(),
+          getPortfolioWithAccounts(this.usersPortfolioName)
+        ]);
+        // Set success flags
+        this.funds = funds;
+        this.portfolio = portfolio;
+        this.loadingData = false;
+      } catch (ex) {
+        // Set failure flags
+        this.loadingData = false;
+        this.errorLoadingData = true;
+      }
     },
     handleLogOut() {
+      this.usersPortfolioName = "";
+      this.selectedAccountName = "";
       this.isLoggedIn = false;
+      this.portfolio = undefined;
+      this.funds = undefined;
+      this.loadingData = false;
+      this.errorLoadingData = false;
     }
   }
 });
@@ -60,14 +111,15 @@ body {
       rgba(0, 0, 0, 0) 30%,
       rgba(0, 0, 0, 0.6)
     )
-    #634b78;
-  background-attachment: fixed;
+    #634b78 fixed;
+  /* background-attachment: fixed; */
   color: #555;
   padding: 20px 30px;
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-weight: 300;
   letter-spacing: 0.1rem;
 }
@@ -81,6 +133,11 @@ h1 {
 
 h2 {
   font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
@@ -118,6 +175,10 @@ button {
 /* Very slight impression of depth change as the button is pressed */
 .btn:active {
   box-shadow: 2px 2px 2px #333;
+}
+
+.btn.toggleOn {
+  background-color: #967cad;
 }
 
 #app {
