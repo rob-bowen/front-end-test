@@ -6,14 +6,15 @@
       <span class="portfolio__value">{{ portfolioValue }}</span>
     </h2>
     <transition name="slide" mode="out-in">
-      <portfolio-loader v-if="loadingData"/>
-      <portfolio-error v-else-if="errorLoadingData" @retry-load="handleRetry"/>
+      <portfolio-loader v-if="loadingData" />
+      <portfolio-error v-else-if="errorLoadingData" @retry-load="handleRetry" />
       <div v-else>
         <portfolio-account
           v-if="selectedAccount"
           :account="selectedAccount"
           :funds="funds"
           :totalPortfolioWorth="totalPortfolioWorth"
+          :portfolioName="portfolioName"
         />
       </div>
     </transition>
@@ -27,7 +28,7 @@ import {
   FundHolding,
   Account as AccountType
 } from "@/types/funds";
-import { calculateHoldingValue } from "@/services/fundsSvc";
+import { calculateHoldingValueAndQuantity } from "@/services/fundsSvc";
 import PortfolioAccount from "@/components/portfolio/PortfolioAccount";
 import PortfolioLoader from "@/components/portfolio/PortfolioLoader";
 import PortfolioError from "@/components/portfolio/PortfolioError";
@@ -102,10 +103,12 @@ export default Vue.extend({
               const fund: Fund = this.funds.find(
                 fund => fund.isin === holdingKey
               );
-              return (
-                // Calculate and add the holdings value onto the accounts total
-                holdingsAccumaltor + calculateHoldingValue(fund, holdingAmount)
+
+              const [holdingValue] = calculateHoldingValueAndQuantity(
+                fund,
+                holdingAmount
               );
+              return holdingsAccumaltor + holdingValue;
             },
             0
           );

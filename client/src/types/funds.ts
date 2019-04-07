@@ -31,6 +31,14 @@ export interface HoldingAmount {
   exponent: number;
 }
 
+/* 
+  Represents a trade
+*/
+export interface Trade {
+  fundName: string;
+  amount: number;
+}
+
 /*
   Holds the Funds details (including history) as returned from the funds service.
 */
@@ -62,6 +70,7 @@ export interface FundHolding {
   name: string;
   price: number;
   history?: FundHistoryItem;
+  quantity: number;
   value: number;
   percentageOfPortfolio: number;
 }
