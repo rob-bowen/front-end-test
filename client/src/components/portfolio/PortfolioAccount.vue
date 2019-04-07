@@ -1,7 +1,13 @@
 <template>
   <div class="account">
     <h3>Account {{ account.name }}</h3>
-    <fund v-for="fund in accountFunds" :key="fund.isin" :fund="fund"/>
+    <fund
+      v-for="fund in accountFunds"
+      :key="fund.isin"
+      :fund="fund"
+      :portfolioName="portfolioName"
+      :accountName="account.name"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -11,6 +17,10 @@ import Fund from "@/components/funds/Fund";
 import { createFundHoldings } from "@/services/fundsSvc";
 export default Vue.extend({
   props: {
+    portfolioName: {
+      type: String,
+      required: true
+    },
     account: {
       type: Object,
       required: true
@@ -49,7 +59,6 @@ export default Vue.extend({
           this.totalPortfolioWorth
         );
       });
-
       return funds;
     }
   }

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut"/>
+    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut" />
     <transition name="slide" mode="out-in">
-      <login v-if="notLoggedIn" @user-logged-in="handleLogIn"/>
+      <login v-if="notLoggedIn" @user-logged-in="handleLogIn" />
       <portfolio
         v-else
         :funds="funds"
@@ -12,7 +12,8 @@
         :errorLoadingData="errorLoadingData"
         :usersPortfolioName="usersPortfolioName"
         @retry-load="loadData"
-      >Logged In!</portfolio>
+        >Logged In!</portfolio
+      >
     </transition>
   </div>
 </template>
@@ -181,6 +182,10 @@ button {
   background-color: #967cad;
 }
 
+.btn + .btn {
+  margin-left: 10px;
+}
+
 #app {
   max-width: 1120px;
   min-height: calc(100vh - 40px); /* 40px = vertical body padding */
@@ -192,7 +197,7 @@ button {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.2s, transform 0.5s;
 }
 .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

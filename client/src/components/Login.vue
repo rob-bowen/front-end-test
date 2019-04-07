@@ -128,13 +128,6 @@ export default Vue.extend({
   padding-top: 10px;
 }
 
-p.error {
-  text-align: center;
-  color: red;
-  margin-top: 20px;
-  margin-bottom: 0;
-}
-
 .slide-enter-active,
 .slide-leave-active {
   transition: opacity 0.5s, transform 0.5s;
@@ -142,5 +135,12 @@ p.error {
 .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(-30px);
+}
+
+p.error {
+  text-align: center;
+  color: red;
+  margin-top: 20px;
+  margin-bottom: 0;
 }
 </style>

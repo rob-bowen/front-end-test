@@ -4,15 +4,19 @@
       class="form-field__label"
       :class="{ error: hasValidationError }"
       :for="id"
-    >{{ labelText }}:</label>
+      >{{ labelText }}:</label
+    >
     <input
       class="form-field__input"
-      :class="{ error: hasValidationError }"
+      :class="{
+        error: hasValidationError,
+        'form-field__input--narrow': narrow
+      }"
       :id="id"
       :type="type"
       :value="value"
       @input="handleInput"
-    >
+    />
     <p class="error" v-if="hasValidationError">{{ this.validationError }}</p>
     <p></p>
   </div>
@@ -33,6 +37,10 @@ export default Vue.extend({
     type: {
       type: String,
       default: "text"
+    },
+    narrow: {
+      type: Boolean,
+      default: false
     },
     validationError: String
   },
@@ -74,6 +82,10 @@ export default Vue.extend({
   font-size: 2rem;
 
   border-radius: 5px;
+}
+
+.form-field__input--narrow {
+  max-width: 200px;
 }
 
 .form-field__input.error {
