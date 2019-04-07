@@ -4,8 +4,6 @@
     <dd>{{ fund.isin }}</dd>
     <dt>Name</dt>
     <dd>{{ fund.name }}</dd>
-    <!-- <dt>Quanity Held</dt>
-    <dd>{{ fund.quantity }}</dd>-->
     <dt>Value</dt>
     <dd>£{{ fund.value | toTwoDigits }}</dd>
     <dt>Current Price</dt>

@@ -12,9 +12,11 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { FundHolding, HoldingAmount, Fund as FundType } from "@/types/funds";
+
 import Fund from "@/components/funds/Fund";
+import { FundHolding, HoldingAmount, Fund as FundType } from "@/types/funds";
 import { createFundHoldings } from "@/services/fundsSvc";
+
 export default Vue.extend({
   props: {
     portfolioName: {
@@ -64,4 +66,3 @@ export default Vue.extend({
   }
 });
 </script>
-<style scoped></style>

@@ -21,7 +21,6 @@ import Vue from "vue";
 import SiteHeader from "@/components/SiteHeader";
 import Login from "@/components/Login";
 import Portfolio from "@/components/portfolio/Portfolio";
-
 import { ApplicationState } from "@/types/state";
 import { getFundsWithHistory } from "@/services/fundsSvc";
 import { getPortfolioWithAccounts } from "@/services/portfolioSvc";
@@ -112,7 +111,6 @@ body {
       rgba(0, 0, 0, 0.6)
     )
     #634b78 fixed;
-  /* background-attachment: fixed; */
   color: #555;
   padding: 20px 30px;
 }

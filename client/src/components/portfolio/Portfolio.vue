@@ -34,12 +34,8 @@ import PortfolioLoader from "@/components/portfolio/PortfolioLoader";
 import PortfolioError from "@/components/portfolio/PortfolioError";
 
 import "vue-css-donut-chart/dist/vcdonut.css";
+
 export default Vue.extend({
-  data() {
-    return {
-      sections: [{ value: 25 }]
-    };
-  },
   props: {
     loadingData: {
       type: Boolean,

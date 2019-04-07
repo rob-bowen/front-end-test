@@ -85,7 +85,6 @@ export default Vue.extend({
         }
         return;
       }
-
       showErrorToast("Invalid amount entered!");
     }
   }
