@@ -22,6 +22,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
+import "vue-css-donut-chart/dist/vcdonut.css";
 import {
   HoldingAmount,
   Fund,
@@ -32,8 +33,6 @@ import { calculateHoldingValueAndQuantity } from "@/services/fundsSvc";
 import PortfolioAccount from "@/components/portfolio/PortfolioAccount";
 import PortfolioLoader from "@/components/portfolio/PortfolioLoader";
 import PortfolioError from "@/components/portfolio/PortfolioError";
-
-import "vue-css-donut-chart/dist/vcdonut.css";
 
 export default Vue.extend({
   props: {

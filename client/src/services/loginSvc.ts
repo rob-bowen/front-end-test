@@ -1,6 +1,5 @@
-import { LoginInputModel } from "@/types/login";
-
 import axios from "axios";
+import { LoginInputModel } from "@/types/login";
 
 /*
   Makes the required api call to login in a user with their entered credentials
