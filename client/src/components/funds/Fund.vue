@@ -128,4 +128,20 @@ export default Vue.extend({
 .fund__panel-options {
   padding: 15px;
 }
+
+@media (max-width: 600px) {
+  .fund__row {
+    flex-direction: column;
+  }
+
+  .fund__details {
+    margin-top: 20px;
+  }
+
+  .fund__panel-options .btn {
+    margin: 10px 0;
+    display: block;
+    width: 100%;
+  }
+}
 </style>

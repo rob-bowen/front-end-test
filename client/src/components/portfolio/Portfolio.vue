@@ -6,8 +6,8 @@
       <span class="portfolio__value">{{ portfolioValue }}</span>
     </h2>
     <transition name="slide" mode="out-in">
-      <portfolio-loader v-if="loadingData" />
-      <portfolio-error v-else-if="errorLoadingData" @retry-load="handleRetry" />
+      <portfolio-loader v-if="loadingData"/>
+      <portfolio-error v-else-if="errorLoadingData" @retry-load="handleRetry"/>
       <div v-else>
         <portfolio-account
           v-if="selectedAccount"
@@ -144,5 +144,13 @@ export default Vue.extend({
   font-style: italic;
   font-size: 2rem;
   margin-left: 10px;
+}
+
+@media (max-width: 760px) {
+  .portfolio__value {
+    display: block;
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }
 </style>

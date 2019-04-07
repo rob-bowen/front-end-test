@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut" />
+    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut"/>
     <transition name="slide" mode="out-in">
-      <login v-if="notLoggedIn" @user-logged-in="handleLogIn" />
+      <login v-if="notLoggedIn" @user-logged-in="handleLogIn"/>
       <portfolio
         v-else
         :funds="funds"
@@ -12,8 +12,7 @@
         :errorLoadingData="errorLoadingData"
         :usersPortfolioName="usersPortfolioName"
         @retry-load="loadData"
-        >Logged In!</portfolio
-      >
+      >Logged In!</portfolio>
     </transition>
   </div>
 </template>
@@ -130,6 +129,7 @@ h1 {
   line-height: 5rem;
   word-spacing: 0.4rem;
   color: #fff;
+  margin-right: 20px;
 }
 
 h2 {
