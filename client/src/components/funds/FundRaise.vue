@@ -54,8 +54,6 @@ export default Vue.extend({
 
       const maxToSell = Math.floor(this.fund.quantity);
 
-      alert("maxToSell:" + maxToSell);
-
       if (isNaN(num) || num <= 0 || num > maxToSell) {
         hasErrors = true;
         this.validationError = `Please enter a valid whole number greater than 0 and less than or equal to ${maxToSell}`;
@@ -70,7 +68,7 @@ export default Vue.extend({
       if (this.validateForm()) {
         try {
           const minusTrade = -parseInt(this.amount, 10);
-          alert(minusTrade);
+
           const trade: Trade = {
             fundName: this.fund.isin,
             amount: minusTrade
