@@ -18,46 +18,58 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
+
 import HelloWorld from "@/components/HelloWorld.vue";
 import SiteHeader from "@/components/SiteHeader.vue";
 import Login from "@/components/Login.vue";
-import Portfolio from "@/components/portfolio/Portfolio.vue";
-import { ApplicationState } from "./types/state";
+import PortfolioComponent from "@/components/portfolio/Portfolio.vue";
+
+import { Fund, Portfolio } from "./types/funds";
 import { getFundsWithHistory } from "./services/fundsSvc";
 import { getPortfolioWithAccounts } from "./services/portfolioSvc";
 
-export default Vue.extend({
+@Component({
   components: {
     SiteHeader,
     Login,
-    Portfolio
-  },
-  computed: {
-    notLoggedIn() {
-      return !this.isLoggedIn;
-    }
-  },
-  data(): ApplicationState {
-    return {
-      usersPortfolioName: "",
-      selectedAccountName: "",
-      isLoggedIn: false,
-      funds: undefined,
-      portfolio: undefined,
-      loadingData: false,
-      errorLoadingData: false
-    };
-  },
-  methods: {
-    handleLogIn() {
+    Portfolio: PortfolioComponent
+  }
+})
+export default class App extends Vue {
+  
+  // Data
+  private usersPortfolioName: string = "";
+  private selectedAccountName: string ="";
+  private isLoggedIn: boolean = false;
+  private funds: Fund[] | null = null;
+  private portfolio: Portfolio | null = null;
+  private loadingData: boolean = false;
+  private errorLoadingData: boolean = false;
+
+  // Computed 
+  get notLoggedIn(): boolean {
+    return !this.isLoggedIn;
+  }
+
+  // Methods: 
+  handleLogIn() {
       // Obviously these two lines being hard coded are not 'real world'
       this.usersPortfolioName = "ADA123456789";
       this.selectedAccountName = "ADA123456789-ISA";
 
       this.isLoggedIn = true;
       this.loadData();
-    },
+    };
+    handleLogOut() {
+      this.usersPortfolioName = "";
+      this.selectedAccountName = "";
+      this.isLoggedIn = false;s
+      this.portfolio = null;
+      this.funds = null;
+      this.loadingData = false;
+      this.errorLoadingData = false;
+    };
     async loadData() {
       try {
         // Set loading status flags
@@ -78,18 +90,8 @@ export default Vue.extend({
         this.loadingData = false;
         this.errorLoadingData = true;
       }
-    },
-    handleLogOut() {
-      this.usersPortfolioName = "";
-      this.selectedAccountName = "";
-      this.isLoggedIn = false;
-      this.portfolio = undefined;
-      this.funds = undefined;
-      this.loadingData = false;
-      this.errorLoadingData = false;
-    }
-  }
-});
+    };
+}
 </script>
 
 <style>
