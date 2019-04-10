@@ -14,38 +14,33 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
+
 import FormField from "@/components/FormField.vue";
 import { showSuccessToast, showErrorToast } from "../../services/toastSvc";
 import { placeTrade } from "../../services/portfolioSvc";
-import { Trade } from "../../types/funds";
-export default Vue.extend({
+import { Trade, FundHolding } from "../../types/funds";
+
+
+@Component({
   components: {
     FormField
-  },
-  props: {
-    portfolioName: {
-      type: String,
-      required: true
-    },
-    accountName: {
-      type: String,
-      required: true
-    },
-    fund: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {
-      submitError: "",
-      validationError: "",
-      amount: "0"
-    };
-  },
-  methods: {
-    validateForm(): boolean {
+  }
+})
+export default class HelloWorld extends Vue {
+  
+  // Data
+  private submitError: string;
+  private validationError: string;
+  private amount: string;
+
+  // Props
+  @Prop() private portfolioName: string;
+  @Prop() private accountName: string;
+  @Prop() private fund: FundHolding;
+
+  // Methods
+  validateForm(): boolean {
       let hasErrors = false;
       this.validationError = "";
       this.submitError = "";
@@ -63,8 +58,9 @@ export default Vue.extend({
       }
 
       return !hasErrors;
-    },
-    async handleClick(): Promise<void> {
+  };
+
+  async handleClick(): Promise<void> {
       if (this.validateForm()) {
         try {
           const minusTrade = -parseInt(this.amount, 10);
@@ -87,8 +83,8 @@ export default Vue.extend({
       }
       showErrorToast("Invalid amount entered!");
     }
-  }
-});
+}
+
 </script>
 <style scoped>
 .fund__invest {

@@ -59,7 +59,7 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import FundHistoryChart from "./FundHistoryChart.vue";
 import FundPercentageChart from "./FundPercentageChart.vue";
 import FundDetails from "./FundDetails.vue";

@@ -19,6 +19,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
+import HelloWorld from "@/components/HelloWorld.vue";
 import SiteHeader from "@/components/SiteHeader.vue";
 import Login from "@/components/Login.vue";
 import Portfolio from "@/components/portfolio/Portfolio.vue";
