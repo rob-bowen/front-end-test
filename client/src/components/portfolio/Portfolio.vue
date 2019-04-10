@@ -6,8 +6,8 @@
       <span class="portfolio__value">{{ portfolioValue }}</span>
     </h2>
     <transition name="slide" mode="out-in">
-      <portfolio-loader v-if="loadingData"/>
-      <portfolio-error v-else-if="errorLoadingData" @retry-load="handleRetry"/>
+      <portfolio-loader v-if="loadingData" />
+      <portfolio-error v-else-if="errorLoadingData" @retry-load="handleRetry" />
       <div v-else>
         <portfolio-account
           v-if="selectedAccount"
@@ -23,16 +23,17 @@
 <script lang="ts">
 import Vue from "vue";
 import "vue-css-donut-chart/dist/vcdonut.css";
+
 import {
   HoldingAmount,
   Fund,
   FundHolding,
   Account as AccountType
-} from "@/types/funds";
-import { calculateHoldingValueAndQuantity } from "@/services/fundsSvc";
-import PortfolioAccount from "@/components/portfolio/PortfolioAccount";
-import PortfolioLoader from "@/components/portfolio/PortfolioLoader";
-import PortfolioError from "@/components/portfolio/PortfolioError";
+} from "../../types/funds";
+import { calculateHoldingValueAndQuantity } from "../../services/fundsSvc";
+import PortfolioAccount from "./PortfolioAccount.vue";
+import PortfolioLoader from "./PortfolioLoader.vue";
+import PortfolioError from "./PortfolioError.vue";
 
 export default Vue.extend({
   props: {

@@ -29,10 +29,10 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import FormField from "@/components/FormField";
-import { showSuccessToast, showErrorToast } from "@/services/toastSvc";
-import { LoginInputModel } from "@/types/login";
-import { login as svcLogin } from "@/services/loginSvc";
+import FormField from "@/components/FormField.vue";
+import { showSuccessToast, showErrorToast } from "../services/toastSvc";
+import { LoginInputModel } from "../types/login";
+import { login as svcLogin } from "../services/loginSvc";
 
 export default Vue.extend({
   data: () => {

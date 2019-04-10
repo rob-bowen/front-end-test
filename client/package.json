@@ -15,7 +15,9 @@
     "vue-css-donut-chart": "^1.0.2",
     "vue-spinner": "^1.0.3",
     "vue-toasted": "^1.1.26",
-    "vuetrend": "^0.3.2"
+    "vuetrend": "^0.3.2",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^8.0.0"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",

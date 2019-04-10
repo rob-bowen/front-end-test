@@ -2,10 +2,12 @@
   <div class="fund">
     <div class="fund__row">
       <div class="fund__chart">
-        <fund-percentage-chart :percentage-of-portfolio="fund.percentageOfPortfolio"/>
+        <fund-percentage-chart
+          :percentage-of-portfolio="fund.percentageOfPortfolio"
+        />
       </div>
       <div class="fund__details">
-        <fund-details :fund="fund"/>
+        <fund-details :fund="fund" />
       </div>
     </div>
     <div class="fund__panels">
@@ -16,24 +18,30 @@
             toggleOn: showChart
           }"
           @click="toggleChart"
-        >Show Trend Chart</button>
+        >
+          Show Trend Chart
+        </button>
         <button
           class="btn"
           :class="{
             toggleOn: showInvest
           }"
           @click="toggleInvest"
-        >Invest</button>
+        >
+          Invest
+        </button>
         <button
           class="btn"
           :class="{
             toggleOn: showRaise
           }"
           @click="toggleRaise"
-        >Raise</button>
+        >
+          Raise
+        </button>
       </div>
       <transition name="slide" mode="out-in">
-        <fund-history-chart :history="fund.history" v-if="showChart"/>
+        <fund-history-chart :history="fund.history" v-if="showChart" />
         <fund-invest
           v-if="showInvest"
           :portfolioName="portfolioName"
@@ -52,11 +60,11 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import FundHistoryChart from "@/components/funds/FundHistoryChart";
-import FundPercentageChart from "@/components/funds/FundPercentageChart";
-import FundDetails from "@/components/funds/FundDetails";
-import FundInvest from "@/components/funds/FundInvest";
-import FundRaise from "@/components/funds/FundRaise";
+import FundHistoryChart from "./FundHistoryChart.vue";
+import FundPercentageChart from "./FundPercentageChart.vue";
+import FundDetails from "./FundDetails.vue";
+import FundInvest from "./FundInvest.vue";
+import FundRaise from "./FundRaise.vue";
 import AccountVue from "../portfolio/Account.vue";
 export default Vue.extend({
   components: {

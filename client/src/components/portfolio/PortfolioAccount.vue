@@ -13,9 +13,13 @@
 <script lang="ts">
 import Vue from "vue";
 
-import Fund from "@/components/funds/Fund";
-import { FundHolding, HoldingAmount, Fund as FundType } from "@/types/funds";
-import { createFundHoldings } from "@/services/fundsSvc";
+import Fund from "@/components/funds/Fund.vue";
+import {
+  FundHolding,
+  HoldingAmount,
+  Fund as FundType
+} from "../../types/funds";
+import { createFundHoldings } from "../../services/fundsSvc";
 
 export default Vue.extend({
   props: {

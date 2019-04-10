@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut"/>
+    <site-header :is-logged-in="isLoggedIn" @user-logged-out="handleLogOut" />
     <transition name="slide" mode="out-in">
-      <login v-if="notLoggedIn" @user-logged-in="handleLogIn"/>
+      <login v-if="notLoggedIn" @user-logged-in="handleLogIn" />
       <portfolio
         v-else
         :funds="funds"
@@ -12,18 +12,19 @@
         :errorLoadingData="errorLoadingData"
         :usersPortfolioName="usersPortfolioName"
         @retry-load="loadData"
-      >Logged In!</portfolio>
+        >Logged In!</portfolio
+      >
     </transition>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
-import SiteHeader from "@/components/SiteHeader";
-import Login from "@/components/Login";
-import Portfolio from "@/components/portfolio/Portfolio";
-import { ApplicationState } from "@/types/state";
-import { getFundsWithHistory } from "@/services/fundsSvc";
-import { getPortfolioWithAccounts } from "@/services/portfolioSvc";
+import SiteHeader from "@/components/SiteHeader.vue";
+import Login from "@/components/Login.vue";
+import Portfolio from "@/components/portfolio/Portfolio.vue";
+import { ApplicationState } from "./types/state";
+import { getFundsWithHistory } from "./services/fundsSvc";
+import { getPortfolioWithAccounts } from "./services/portfolioSvc";
 
 export default Vue.extend({
   components: {

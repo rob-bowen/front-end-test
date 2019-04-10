@@ -15,10 +15,10 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import FormField from "@/components/FormField";
-import { showSuccessToast, showErrorToast } from "@/services/toastSvc";
-import { placeTrade } from "@/services/portfolioSvc";
-import { Trade } from "@/types/funds";
+import FormField from "@/components/FormField.vue";
+import { showSuccessToast, showErrorToast } from "../../services/toastSvc";
+import { placeTrade } from "../../services/portfolioSvc";
+import { Trade } from "../../types/funds";
 export default Vue.extend({
   components: {
     FormField

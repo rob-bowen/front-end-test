@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { showSuccessToast } from "@/services/toastSvc";
+import { showSuccessToast } from "../services/toastSvc";
 
 export default Vue.extend({
   props: {
