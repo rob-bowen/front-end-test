@@ -22,48 +22,39 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
-  props: {
-    value: String /* For v-model support */,
-    id: {
-      type: String,
-      required: true
-    },
-    labelText: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      default: "text"
-    },
-    narrow: {
-      type: Boolean,
-      default: false
-    },
-    validationError: String
-  },
-  computed: {
-    hasValidationError() {
-      if (this.validationError) {
-        return true;
-      }
-      return false;
-    },
-    classes() {
-      return {
-        error: this.hasValidationErrors
-      };
-    }
-  },
-  methods: {
-    handleInput(e: any) {
-      this.$emit("input", e.target.value);
-    }
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+@Component
+export default class FormField extends Vue {
+  @Prop() value!: string; /* For v-model support */
+  @Prop() id!: string;
+  @Prop() labelText!: string;
+  @Prop() type!: string;
+  @Prop() narrow!: boolean;
+  @Prop() validationError!: string;
+
+  // Methods
+  handleInput(e: any): void {
+    /* Other half of v-model support */
+    this.$emit("input", e.target.value);
   }
-});
+
+  // Computed
+  get hasValidationError(): boolean {
+    if (this.validationError) {
+      return true;
+    }
+    return false;
+  }
+
+  get classes() {
+    return {
+      error: this.hasValidationError
+    };
+  }
+}
 </script>
+
 <style scoped>
 .form-field__label {
   display: block;

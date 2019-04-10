@@ -14,15 +14,13 @@
   </vc-donut>
 </template>
 <script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
-  props: {
-    percentageOfPortfolio: {
-      type: Number,
-      required: true
-    }
-  }
-});
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+@Component
+export default class FundPercentageChart extends Vue {
+  // Props
+  @Prop() private percentageOfPortfolio!: number;
+}
 </script>
 <style scoped>
 .fund__chart-desc span {

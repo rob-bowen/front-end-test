@@ -17,74 +17,73 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import FormField from "@/components/FormField.vue";
+
 import { showSuccessToast, showErrorToast } from "../../services/toastSvc";
 import { placeTrade } from "../../services/portfolioSvc";
-import { Trade, FundHolding } from "../../types/funds";
 
+import { Trade, FundHolding } from "../../types/funds";
 
 @Component({
   components: {
     FormField
   }
 })
-export default class HelloWorld extends Vue {
-  
+export default class FundRaise extends Vue {
   // Data
-  private submitError: string;
-  private validationError: string;
-  private amount: string;
+  private submitError: string = "";
+  private validationError: string = "";
+  private amount: string = "0";
 
   // Props
-  @Prop() private portfolioName: string;
-  @Prop() private accountName: string;
-  @Prop() private fund: FundHolding;
+  @Prop() private portfolioName!: string;
+  @Prop() private accountName!: string;
+  @Prop() private fund!: FundHolding;
 
   // Methods
   validateForm(): boolean {
-      let hasErrors = false;
-      this.validationError = "";
-      this.submitError = "";
+    let hasErrors = false;
+    this.validationError = "";
+    this.submitError = "";
 
-      const num = parseInt(this.amount, 10);
+    const num = parseInt(this.amount, 10);
 
-      const maxToSell = Math.floor(this.fund.quantity);
+    const maxToSell = Math.floor(this.fund.quantity);
 
-      if (isNaN(num) || num <= 0 || num > maxToSell) {
-        hasErrors = true;
-        this.validationError = `Please enter a valid whole number greater than 0 and less than or equal to ${maxToSell}`;
-      } else {
-        // This will remove any e's  as otherwise 1e etc is valid
-        this.amount = num.toString();
-      }
+    if (isNaN(num) || num <= 0 || num > maxToSell) {
+      hasErrors = true;
+      this.validationError = `Please enter a valid whole number greater than 0 and less than or equal to ${maxToSell}`;
+    } else {
+      // This will remove any e's  as otherwise 1e etc is valid
+      this.amount = num.toString();
+    }
 
-      return !hasErrors;
-  };
+    return !hasErrors;
+  }
 
   async handleClick(): Promise<void> {
-      if (this.validateForm()) {
-        try {
-          const minusTrade = -parseInt(this.amount, 10);
+    if (this.validateForm()) {
+      try {
+        const minusTrade = -parseInt(this.amount, 10);
 
-          const trade: Trade = {
-            fundName: this.fund.isin,
-            amount: minusTrade
-          };
-          await placeTrade(this.portfolioName, this.accountName, trade);
-          // Handle successful login
-          showSuccessToast("Trade posted ok!");
-          // Clear the form down
-          this.amount = "";
-        } catch (e) {
-          this.submitError =
-            "Sorry, something has gone wrong. Please try again later.";
-          showErrorToast("Something has gone wrong!");
-        }
-        return;
+        const trade: Trade = {
+          fundName: this.fund.isin,
+          amount: minusTrade
+        };
+        await placeTrade(this.portfolioName, this.accountName, trade);
+        // Handle successful login
+        showSuccessToast("Trade posted ok!");
+        // Clear the form down
+        this.amount = "";
+      } catch (e) {
+        this.submitError =
+          "Sorry, something has gone wrong. Please try again later.";
+        showErrorToast("Something has gone wrong!");
       }
-      showErrorToast("Invalid amount entered!");
+      return;
     }
+    showErrorToast("Invalid amount entered!");
+  }
 }
-
 </script>
 <style scoped>
 .fund__invest {

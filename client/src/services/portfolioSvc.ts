@@ -11,7 +11,7 @@ export const getPortfolioWithAccounts = (name: string): Promise<Portfolio> => {
 };
 
 /* 
-  Make the api calls required to place a trade
+  Makes the api calls required to place a trade
 */
 export const placeTrade = (
   portfolioName: string,

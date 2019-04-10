@@ -4,13 +4,16 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
+
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-export default Vue.extend({
+
+@Component({
   components: {
     PulseLoader
   }
-});
+})
+export default class PortfolioLoader extends Vue {}
 </script>
 <style scoped>
 .portfolio__loading {

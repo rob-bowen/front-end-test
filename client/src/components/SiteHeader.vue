@@ -5,23 +5,18 @@
   </header>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { showSuccessToast } from "../services/toastSvc";
 
-export default Vue.extend({
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      required: true
-    }
-  },
-  methods: {
-    handleLogoutClick() {
-      this.$emit("user-logged-out");
-      showSuccessToast("Logged out ok!");
-    }
+@Component
+export default class SideHeader extends Vue {
+  @Prop() isLoggedIn!: boolean;
+
+  handleLogoutClick(): void {
+    this.$emit("user-logged-out");
+    showSuccessToast("Logged out ok!");
   }
-});
+}
 </script>
 <style scoped>
 .site-header {

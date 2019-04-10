@@ -37,60 +37,59 @@ import { getPortfolioWithAccounts } from "./services/portfolioSvc";
   }
 })
 export default class App extends Vue {
-  
   // Data
   private usersPortfolioName: string = "";
-  private selectedAccountName: string ="";
+  private selectedAccountName: string = "";
   private isLoggedIn: boolean = false;
   private funds: Fund[] | null = null;
   private portfolio: Portfolio | null = null;
   private loadingData: boolean = false;
   private errorLoadingData: boolean = false;
 
-  // Computed 
+  // Computed
   get notLoggedIn(): boolean {
     return !this.isLoggedIn;
   }
 
-  // Methods: 
+  // Methods:
   handleLogIn() {
-      // Obviously these two lines being hard coded are not 'real world'
-      this.usersPortfolioName = "ADA123456789";
-      this.selectedAccountName = "ADA123456789-ISA";
+    // Obviously these two lines being hard coded are not 'real world'
+    this.usersPortfolioName = "ADA123456789";
+    this.selectedAccountName = "ADA123456789-ISA";
 
-      this.isLoggedIn = true;
-      this.loadData();
-    };
-    handleLogOut() {
-      this.usersPortfolioName = "";
-      this.selectedAccountName = "";
-      this.isLoggedIn = false;
-      this.portfolio = null;
-      this.funds = null;
-      this.loadingData = false;
+    this.isLoggedIn = true;
+    this.loadData();
+  }
+  handleLogOut() {
+    this.usersPortfolioName = "";
+    this.selectedAccountName = "";
+    this.isLoggedIn = false;
+    this.portfolio = null;
+    this.funds = null;
+    this.loadingData = false;
+    this.errorLoadingData = false;
+  }
+  async loadData() {
+    try {
+      // Set loading status flags
+      this.loadingData = true;
       this.errorLoadingData = false;
-    };
-    async loadData() {
-      try {
-        // Set loading status flags
-        this.loadingData = true;
-        this.errorLoadingData = false;
 
-        // Actually fetch the data
-        const [funds, portfolio] = await Promise.all([
-          getFundsWithHistory(),
-          getPortfolioWithAccounts(this.usersPortfolioName)
-        ]);
-        // Set success flags
-        this.funds = funds;
-        this.portfolio = portfolio;
-        this.loadingData = false;
-      } catch (ex) {
-        // Set failure flags
-        this.loadingData = false;
-        this.errorLoadingData = true;
-      }
-    };
+      // Actually fetch the data
+      const [funds, portfolio] = await Promise.all([
+        getFundsWithHistory(),
+        getPortfolioWithAccounts(this.usersPortfolioName)
+      ]);
+      // Set success flags
+      this.funds = funds;
+      this.portfolio = portfolio;
+      this.loadingData = false;
+    } catch (ex) {
+      // Set failure flags
+      this.loadingData = false;
+      this.errorLoadingData = true;
+    }
+  }
 }
 </script>
 

@@ -7,105 +7,101 @@
         id="username"
         label-text="Username"
         v-model.trim="username"
-        :validation-error="validationErrors.username"
+        :validation-error="usernameValidationError"
       />
       <form-field
         id="password"
         label-text="Password"
         v-model.trim="password"
         type="password"
-        :validation-error="validationErrors.password"
+        :validation-error="passwordValidationError"
       />
       <div class="login__buttons">
         <button href class="btn btn-login">Login</button>
       </div>
       <transition name="slide">
-        <p class="error" v-if="showSubmitError">
-          {{ validationErrors.submit }}
-        </p>
+        <p class="error" v-if="showSubmitError">{{ submitValidationError }}</p>
       </transition>
     </form>
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
+
 import FormField from "@/components/FormField.vue";
+
 import { showSuccessToast, showErrorToast } from "../services/toastSvc";
-import { LoginInputModel } from "../types/login";
 import { login as svcLogin } from "../services/loginSvc";
 
-export default Vue.extend({
-  data: () => {
-    return {
-      username: "ADA123456789",
-      password: "",
-      validationErrors: {
-        username: "",
-        password: "",
-        submit: ""
-      }
-    };
-  },
-  computed: {
-    showSubmitError() {
-      if (this.validationErrors.submit) {
-        return true;
-      }
-      return false;
-    }
-  },
+import { LoginInputModel } from "../types/login";
+
+@Component({
   components: {
     FormField
-  },
-  methods: {
-    validateInputs(): boolean {
-      let allOk = true;
+  }
+})
+export default class Login extends Vue {
+  // Data
+  private username: string = "ADA123456789";
+  private password: string = "";
+  private usernameValidationError: string = "";
+  private passwordValidationError: string = "";
+  private submitValidationError: string = "";
 
-      this.validationErrors.username = "";
-      this.validationErrors.password = "";
-      this.validationErrors.submit = "";
+  // Computed
+  get showSubmitError(): boolean {
+    if (this.submitValidationError) {
+      return true;
+    }
+    return false;
+  }
 
-      /* Values are already trimmed by v-model so no need to check for whitespace */
-      if (this.username === "") {
-        this.validationErrors.username = "Please enter your username!";
-        allOk = false;
+  validateInputs(): boolean {
+    let allOk = true;
+
+    this.usernameValidationError = "";
+    this.passwordValidationError = "";
+    this.submitValidationError = "";
+
+    /* Values are already trimmed by v-model so no need to check for whitespace */
+    if (this.username === "") {
+      this.usernameValidationError = "Please enter your username!";
+      allOk = false;
+    }
+    if (this.password === "") {
+      this.passwordValidationError = "Please enter your password!";
+      allOk = false;
+    }
+
+    return allOk;
+  }
+
+  async handleSubmit() {
+    if (this.validateInputs()) {
+      try {
+        // Attempt the login
+        const credentials: LoginInputModel = {
+          username: this.username,
+          password: this.password
+        };
+        await svcLogin(credentials);
+        this.username = "";
+        this.password = "";
+
+        // Handle successful login
+        showSuccessToast("Logged in ok!");
+        this.$emit("user-logged-in");
+      } catch (ex) {
+        // Handle failed login
+        this.submitValidationError = "Unable to login. Please try again!";
+        // TODO: Distinguish between invalid credentials and server error
+        showErrorToast("Unable to login!");
       }
-      if (this.password === "") {
-        this.validationErrors.password = "Please enter your password!";
-        allOk = false;
-      }
-
-      return allOk;
-    },
-    async handleSubmit() {
-      if (this.validateInputs()) {
-        try {
-          // Attempt the login
-          const credentials: LoginInputModel = {
-            username: this.username,
-            password: this.password
-          };
-          await svcLogin(credentials);
-          this.username = "";
-          this.password = "";
-
-          // Handle successful login
-          showSuccessToast("Logged in ok!");
-          this.$emit("user-logged-in");
-        } catch (ex) {
-          // Handle failed login
-          this.validationErrors.submit = "Unable to login. Please try again!";
-          // TODO: Distinguish between invalid credentials and server error
-          showErrorToast("Unable to login!");
-        }
-      } else {
-        showErrorToast(
-          "Unable to login - Please complete all required fields!"
-        );
-      }
+    } else {
+      showErrorToast("Unable to login - Please complete all required fields!");
     }
   }
-});
+}
 </script>
 <style scoped>
 .login {

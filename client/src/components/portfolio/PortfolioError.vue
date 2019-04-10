@@ -10,14 +10,14 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
-  methods: {
-    handleRetry(): void {
-      this.$emit("retry-load");
-    }
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+@Component
+export default class PortfolioError extends Vue {
+  handleRetry(): void {
+    this.$emit("retry-load");
   }
-});
+}
 </script>
 <style scoped>
 .portfolio__error {

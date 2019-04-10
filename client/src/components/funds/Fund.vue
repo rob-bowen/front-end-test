@@ -60,59 +60,53 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+
+import { FundHolding } from "../../types/funds";
+
 import FundHistoryChart from "./FundHistoryChart.vue";
 import FundPercentageChart from "./FundPercentageChart.vue";
 import FundDetails from "./FundDetails.vue";
 import FundInvest from "./FundInvest.vue";
 import FundRaise from "./FundRaise.vue";
 import AccountVue from "../portfolio/Account.vue";
-export default Vue.extend({
+
+@Component({
   components: {
     FundHistoryChart,
     FundPercentageChart,
     FundDetails,
     FundInvest,
     FundRaise
-  },
-  props: {
-    fund: {
-      type: Object,
-      required: true
-    },
-    portfolioName: {
-      type: String,
-      required: true
-    },
-    accountName: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      showChart: false,
-      showInvest: false,
-      showRaise: false
-    };
-  },
-  methods: {
-    toggleChart() {
-      this.showChart = !this.showChart;
-      this.showInvest = false;
-      this.showRaise = false;
-    },
-    toggleInvest() {
-      this.showInvest = !this.showInvest;
-      this.showChart = false;
-      this.showRaise = false;
-    },
-    toggleRaise() {
-      this.showRaise = !this.showRaise;
-      this.showInvest = false;
-      this.showChart = false;
-    }
   }
-});
+})
+export default class Fund extends Vue {
+  // Props
+  @Prop() private fund!: FundHolding;
+  @Prop() private accountName!: string;
+  @Prop() private portfolioName!: string;
+
+  // Data
+  private showChart: boolean = false;
+  private showInvest: boolean = false;
+  private showRaise: boolean = false;
+
+  // Methods
+  toggleChart(): void {
+    this.showChart = !this.showChart;
+    this.showInvest = false;
+    this.showRaise = false;
+  }
+  toggleInvest(): void {
+    this.showInvest = !this.showInvest;
+    this.showChart = false;
+    this.showRaise = false;
+  }
+  toggleRaise(): void {
+    this.showRaise = !this.showRaise;
+    this.showInvest = false;
+    this.showChart = false;
+  }
+}
 </script>
 <style scoped>
 .fund__row {

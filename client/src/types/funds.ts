@@ -7,7 +7,7 @@
 */
 export interface Portfolio {
   name: string;
-  accounts: Account;
+  accounts: Account[];
 }
 
 /*
@@ -19,7 +19,7 @@ export interface Account {
 }
 
 /*
-  A dictionary struction containing HoldingAmounts keyed by a funds ISIN
+  A dictionary structure containing HoldingAmounts keyed by a funds ISIN
 */
 export type Holdings = Record<string, HoldingAmount>;
 
@@ -29,14 +29,6 @@ export type Holdings = Record<string, HoldingAmount>;
 export interface HoldingAmount {
   unscaled: number;
   exponent: number;
-}
-
-/* 
-  Represents a trade
-*/
-export interface Trade {
-  fundName: string;
-  amount: number;
 }
 
 /*
@@ -55,6 +47,14 @@ export interface Fund {
 export interface FundHistoryItem {
   date: string;
   price: number;
+}
+
+/* 
+  Represents a trade
+*/
+export interface Trade {
+  fundName: string;
+  amount: number;
 }
 
 /************************************************

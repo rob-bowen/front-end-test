@@ -41,15 +41,19 @@ export const getFundsWithHistory = (): Promise<Fund[]> => {
 };
 
 /* 
-  Calcule the value of a holding using a fund and its holding amount
+  Calculate the value of a holding using a fund and its holding amount
 */
 export const calculateHoldingValueAndQuantity = (
   fund: Fund,
   holdingAmount: HoldingAmount
 ): number[] => {
+  // Get the price off the fund
   const unitPrice: number = fund.price;
+  // Calculate the quantity held using the holding amount
   const quantityHeld: number =
     holdingAmount.unscaled * Math.pow(10, holdingAmount.exponent);
+
+  // Calculate the value i.e. price unit price * quantity
   const value = unitPrice * quantityHeld;
   return [value, quantityHeld];
 };
@@ -64,13 +68,16 @@ export const createFundHoldings = (
   holdingAmount: HoldingAmount,
   totalPortfolioValue: number
 ): FundHolding => {
+  // Get the value and quantity
   const [value, quantity] = calculateHoldingValueAndQuantity(
     fund,
     holdingAmount
   );
 
+  // Calculate the percentage of portfolio
   const percentageOfPortfolio = (value / totalPortfolioValue) * 100;
 
+  // Merge in the new information with the fund
   const fundHolding: FundHolding = {
     ...fund,
     quantity,

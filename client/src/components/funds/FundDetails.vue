@@ -11,16 +11,16 @@
   </dl>
 </template>
 <script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
-  props: {
-    fund: {
-      type: Object,
-      required: true
-    }
-  }
-});
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+import { FundHolding } from "../../types/funds";
+
+@Component
+export default class FundDetails extends Vue {
+  @Prop() private fund!: FundHolding;
+}
 </script>
+
 <style scoped>
 dt {
   display: block;
