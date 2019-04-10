@@ -64,7 +64,7 @@ export default class App extends Vue {
     handleLogOut() {
       this.usersPortfolioName = "";
       this.selectedAccountName = "";
-      this.isLoggedIn = false;s
+      this.isLoggedIn = false;
       this.portfolio = null;
       this.funds = null;
       this.loadingData = false;
